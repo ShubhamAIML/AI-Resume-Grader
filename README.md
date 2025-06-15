@@ -1,47 +1,42 @@
-# 🎯 AI Resume Grader - Automated Resume Scoring System
+# AI Resume Grader
 
-A sophisticated Flask web application that analyzes resumes using AI and provides instant scoring with actionable feedback. Perfect for job seekers looking to optimize their resumes and increase their chances of landing interviews.
+An AI-powered web application that analyzes resumes and provides detailed feedback and scoring.
 
-## 🌟 Key Features
+## Features
 
-- **AI-Powered Analysis**: Advanced natural language processing to understand resume content
-- **Comprehensive Scoring**: 0-100 scoring system across multiple criteria with weighted importance
-- **Role-Specific Feedback**: Tailored suggestions based on target job roles (Developer, Data Scientist, Designer, Manager)
-- **PDF Processing**: Intelligent text extraction from PDF resumes
-- **Real-time Feedback**: Instant actionable recommendations for improvement
-- **Modern UI**: Beautiful, responsive interface with smooth animations
-- **Mobile Optimized**: Works perfectly on all devices
+- 📄 Support for PDF, doc, docx and TXT file formats
+- 🎯 Role-specific analysis (Developer, Data Scientist, Designer, General)
+- 📊 Comprehensive scoring system (0-100)
+- 📝 Detailed feedback on resume sections
+- 🛠️ Skills identification and analysis
+- 📱 Responsive design for mobile and desktop
+- 🚀 Real-time analysis with progress indicators
 
-## 🏗️ Project Structure
-
-```
-resume-grader/
-├── app.py                 # Main Flask application with all Python logic
-├── templates/
-│   └── index.html        # Single HTML file with embedded CSS and JS
-├── uploads/              # Temporary storage for uploaded files
-├── requirements.txt      # Python dependencies
-└── README.md            # Project documentation
-```
-
-## 🚀 Quick Setup
+## Installation
 
 ### Prerequisites
-- Python 3.8 or higher
-- pip package manager
 
-### Installation
+- Python 3.7 or higher
+- pip (Python package installer)
 
-1. **Clone the repository**
+### Setup Steps
+
+1. **Clone or download the project files**
    ```bash
-   git clone <AI-Resume-Grader>
-   cd AI-Resume-Grader
+   # Create a new directory for the project
+   mkdir ai-resume-grader
+   cd ai-resume-grader
    ```
 
-2. **Create virtual environment**
+2. **Create a virtual environment (recommended)**
    ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   
+   # Activate virtual environment
+   # On Windows:
+   venv\Scripts\activate
+   # On macOS/Linux:
+   source venv/bin/activate
    ```
 
 3. **Install dependencies**
@@ -49,101 +44,138 @@ resume-grader/
    pip install -r requirements.txt
    ```
 
-4. **Download spaCy model**
+4. **Download spaCy language model**
    ```bash
    python -m spacy download en_core_web_sm
    ```
 
-5. **Run the application**
+5. **Create necessary directories**
+   ```bash
+   mkdir uploads
+   mkdir templates
+   ```
+
+6. **Move the HTML file to templates directory**
+   - Save the provided HTML file as `templates/index.html`
+
+7. **Run the application**
    ```bash
    python app.py
    ```
 
-6. **Open your browser**
-   Navigate to `http://localhost:5000`
+8. **Access the application**
+   - Open your browser and go to `http://localhost:5000`
 
-## 🔧 Technologies Used
+## File Structure
 
-- **Backend**: Flask (Python)
-- **NLP**: spaCy for natural language processing
-- **PDF Processing**: PyPDF2 for text extraction
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
-- **Styling**: Custom CSS with modern design principles
-- **Deployment**: Gunicorn WSGI server (production ready)
+```
+ai-resume-grader/
+├── static/
+│   ├── css/styles.css
+│   └── js/script.js
+├── templates/
+│   └── index.html
+├── uploads/
+│   └── .gitkeep
+├── .gitignore
+├── Procfile
+├── README.md
+├── app.py
+├── requirements.txt
+└── runtime.txt
+```
 
-## 📊 Scoring Criteria
+## Usage
 
-The AI grader evaluates resumes across 6 key areas:
+1. **Upload Resume**: Click "Choose File" or drag and drop your resume (PDF, TXT, DOC, DOCX format)
+2. **Select Role**: Choose the target role from the dropdown menu
+3. **Analyze**: Click "Analyze Resume" to get instant feedback
+4. **Review Results**: View your score, detailed feedback, and improvement suggestions
 
-1. **Contact Information (15%)**: Email, phone, LinkedIn, GitHub
-2. **Education (20%)**: Degree information, institution details
-3. **Work Experience (25%)**: Role descriptions, achievements, quantified results
-4. **Skills (20%)**: Technical and soft skills relevance
-5. **Formatting (10%)**: Structure, readability, section organization  
-6. **Keywords (10%)**: Industry-relevant terms and role-specific language
+## Scoring Criteria
 
-## 🎯 Role-Specific Scoring
+The application evaluates resumes based on:
 
-- **Software Developer**: Focus on programming languages, frameworks, technical projects
-- **Data Scientist**: Emphasis on statistics, machine learning, data analysis tools
-- **Designer**: UI/UX skills, design tools, portfolio mentions
-- **Manager**: Leadership experience, team management, strategic planning
-- **General**: Balanced evaluation across all criteria
+- **Contact Information (20%)**: Email, phone number presence
+- **Section Completeness (25%)**: Required sections like experience, education, skills
+- **Skills Analysis (20%)**: Role-relevant technical and soft skills
+- **Experience Analysis (20%)**: Years of experience identification
+- **Formatting Quality (15%)**: Structure, readability, and presentation
 
-## 🚀 Deployment on Render
+## Role-Specific Analysis
 
-1. **Prepare for deployment**
-   - Ensure `gunicorn` is in requirements.txt
-   - Add `Procfile` if needed: `web: gunicorn app:app`
+### Developer
+- Programming languages (Python, JavaScript, Java, etc.)
+- Frameworks and libraries
+- Development tools and methodologies
+- Cloud platforms and databases
 
-2. **Deploy to Render**
-   - Connect your GitHub repository
-   - Set build command: `pip install -r requirements.txt && python -m spacy download en_core_web_sm`
-   - Set start command: `gunicorn app:app`
-   - Deploy!
+### Data Scientist
+- Statistical and ML tools (Python, R, TensorFlow, etc.)
+- Data visualization tools
+- Big data technologies
+- Analytics platforms
 
-## 🔍 API Endpoints
+### Designer
+- Design software (Photoshop, Figma, Sketch, etc.)
+- UI/UX principles
+- Design methodologies
+- Creative skills
 
-- `GET /`: Main application interface
-- `POST /upload`: Resume upload and analysis endpoint
-- `GET /health`: Health check for monitoring
+### General
+- Soft skills and transferable abilities
+- Leadership and communication
+- Project management
+- General business skills
 
-## 🎨 UI/UX Features
+## Troubleshooting
 
-- **Drag & Drop Upload**: Intuitive file upload experience
-- **Real-time Validation**: Instant feedback on file selection
-- **Progress Indicators**: Clear loading states during analysis
-- **Responsive Design**: Optimized for mobile, tablet, and desktop
-- **Smooth Animations**: Professional micro-interactions
-- **Accessibility**: Screen reader friendly and keyboard navigable
+### Common Issues
 
-## 🔒 Security Features
+1. **spaCy model not found**
+   ```bash
+   python -m spacy download en_core_web_sm
+   ```
 
-- File size limits (16MB max)
-- File type validation (PDF only)
-- Secure filename handling
-- Temporary file cleanup
-- Input sanitization
+2. **NLTK data not found**
+   - The app will automatically download required NLTK data on first run
 
-## 📈 Future Enhancements
+3. **File upload issues**
+   - Ensure file size is under 16MB
+   - Only PDF, TXT, DOC and DOCX files are supported
 
-- Support for DOC/DOCX files
-- Version history tracking
-- Resume builder functionality
-- Integration with job boards
-- Batch processing capabilities
-- Advanced AI tone analysis
+4. **Port already in use**
+   - Change the port in app.py: `app.run(debug=True, host='0.0.0.0', port=5001)`
 
-## 🤝 Contributing
+## Customization
 
-Feel free to fork this project and submit pull requests for improvements!
+### Adding New Roles
+Edit the `SKILL_SETS` dictionary in `app.py` to add new roles and their associated skills.
 
-## 📄 License
+### Modifying Scoring Criteria
+Adjust the scoring weights in the `grade_resume()` function in `app.py`.
+
+### Styling Changes
+Modify the CSS in the `<style>` section of `templates/index.html`.
+
+## Security Notes
+
+- Files are processed in temporary storage and automatically deleted
+- No data is permanently stored on the server
+- Change the `SECRET_KEY` in `app.py` for production use
+
+## License
 
 This project is open source and available under the MIT License.
 
----
+## Contributing
 
-**Live Demo**: [Your Deployed URL Here]  
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
-Built with ❤️ for the hackathon by Shubham.
+## Support
+
+For issues and questions, please check the troubleshooting section or create an issue in the project repository.
