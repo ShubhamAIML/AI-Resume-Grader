@@ -34,8 +34,8 @@ resume-grader/
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
-   cd resume-grader
+   git clone <AI-Resume-Grader>
+   cd AI-Resume-Grader
    ```
 
 2. **Create virtual environment**
@@ -145,7 +145,5 @@ This project is open source and available under the MIT License.
 ---
 
 **Live Demo**: [Your Deployed URL Here]  
-**Video Presentation**: [Your Video Link Here]  
-**GitHub Repository**: [Your Repo Link Here]
 
-Built with ❤️ for the hackathon by [Your Team Name]
+Built with ❤️ for the hackathon by Shubham.
