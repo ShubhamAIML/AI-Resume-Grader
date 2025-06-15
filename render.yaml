@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: resume-grader
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12
+      - key: FLASK_ENV
+        value: production
+    plan: starter
+    autoDeploy: true
