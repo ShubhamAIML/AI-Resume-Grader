@@ -1,4 +1,3 @@
-from flask import Flask, request, render_template, jsonify, flash, redirect, url_for
 import os
 import re
 import PyPDF2
@@ -10,6 +9,7 @@ from collections import Counter
 import json
 from datetime import datetime
 import tempfile
+from flask import Flask, request, render_template, jsonify, flash, redirect, url_for
 from werkzeug.utils import secure_filename
 import docx
 
@@ -18,7 +18,7 @@ try:
     nltk.data.find('tokenizers/punkt')
 except LookupError:
     nltk.download('punkt')
-    
+
 try:
     nltk.data.find('corpora/stopwords')
 except LookupError:
@@ -31,8 +31,8 @@ except OSError:
     nlp = None
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your-secret-key-here'
-app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your-secret-key-here')
+app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER', tempfile.gettempdir())
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
 # Create uploads directory if it doesn't exist
@@ -49,7 +49,7 @@ SKILL_SETS = {
         'agile', 'scrum', 'testing', 'ci/cd', 'linux', 'bash', 'typescript', 'redux'
     ],
     'data_scientist': [
-        'python', 'sql', 'machine learning', 'deep learning', 'tensorflow', 'pytorch',
+        'python', 'r', 'sql', 'machine learning', 'deep learning', 'tensorflow', 'pytorch',
         'scikit-learn', 'pandas', 'numpy', 'matplotlib', 'seaborn', 'jupyter', 'statistics',
         'data visualization', 'big data', 'hadoop', 'spark', 'tableau', 'power bi',
         'excel', 'sas', 'spss', 'nlp', 'computer vision', 'ai', 'aws', 'azure', 'gcp'
@@ -317,7 +317,7 @@ def upload_file():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         
-        with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(filename)[1]) as temp_file:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(filename)[1], dir=app.config['UPLOAD_FOLDER']) as temp_file:
             file.save(temp_file.name)
             temp_path = temp_file.name
         
@@ -359,4 +359,5 @@ def health_check():
     return jsonify({'status': 'healthy', 'timestamp': datetime.now().isoformat()})
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    port = int(os.getenv('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
