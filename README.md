@@ -4,6 +4,14 @@
 
 **AI Resume Grader** is an AI-powered Flask web application that analyzes resumes and provides actionable feedback to help users craft job-winning resumes. Leveraging natural language processing and a sleek, modern interface, it evaluates resume content, formatting, and role-specific relevance. Deploy it seamlessly on Render and elevate your job application game! 📄✨
 
+### 📊 Languages Used
+
+![Languages](https://img.shields.io/badge/CSS-39.9%25-blue?style=flat-square)
+![Languages](https://img.shields.io/badge/Python-25.8%25-yellow?style=flat-square)
+![Languages](https://img.shields.io/badge/JavaScript-21.9%25-orange?style=flat-square)
+![Languages](https://img.shields.io/badge/HTML-12.1%25-red?style=flat-square)
+![Languages](https://img.shields.io/badge/Other-0.3%25-lightgrey?style=flat-square)
+
 ---
 
 ## 🌟 Features
