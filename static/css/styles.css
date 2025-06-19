@@ -3,7 +3,7 @@
     --secondary-gradient: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
     --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     --warning-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-    --hover-gradient: #01ffff34; /* Dark gray for hover */
+    --hover-gradient: #01ffff34;
     --glass-bg: rgba(40, 40, 40, 0.25);
     --glass-border: rgba(60, 60, 60, 0.18);
     --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.37);
@@ -135,12 +135,14 @@ body::before {
     margin: 0 auto;
     line-height: 1.6;
 }
+
 @media (max-width: 768px) {
-.header-subtitle {
-    font-size: 1rem;
-    max-width: 600px;
+    .header-subtitle {
+        font-size: 1rem;
+        max-width: 600px;
     }
 }
+
 .main-card {
     background: var(--glass-bg);
     backdrop-filter: blur(3px);
@@ -320,20 +322,19 @@ body::before {
     align-items: center;
     justify-content: space-between;
     color: var(--text-primary);
-    gap: 10px; /* Ensure spacing between elements */
+    gap: 10px;
 }
 
 .file-name {
     font-weight: 600;
     font-size: 1.1rem;
-    white-space: nowrap; /* Prevent wrapping */
-    overflow-x: auto; /* Enable horizontal scrolling */
-    max-width: calc(100% - 100px); /* Reserve space for the button */
-    scrollbar-width: thin; /* For Firefox */
-    scrollbar-color: var(--text-secondary) transparent; /* For Firefox */
+    white-space: nowrap;
+    overflow-x: auto;
+    max-width: calc(100% - 100px);
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-secondary) transparent;
 }
 
-/* Webkit scrollbar styling for Chrome/Safari */
 .file-name::-webkit-scrollbar {
     height: 6px;
 }
@@ -357,7 +358,7 @@ body::before {
     font-size: 0.9rem;
     font-weight: 500;
     transition: all 0.3s ease;
-    flex-shrink: 0; /* Prevent the button from shrinking */
+    flex-shrink: 0;
 }
 
 .remove-file:hover {
@@ -886,7 +887,6 @@ body::before {
     .header h1 {
         font-size: 2rem;
         margin-top: 15px;
-
     }
 
     .upload-section {
@@ -930,7 +930,7 @@ body::before {
     }
 
     .file-name {
-        max-width: calc(100% - 90px); /* Adjust for smaller screens */
+        max-width: calc(100% - 90px);
     }
 
     .remove-file {
