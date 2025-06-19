@@ -1,181 +1,265 @@
-# AI Resume Grader
+# 🚀 Resume Grader
 
-An AI-powered web application that analyzes resumes and provides detailed feedback and scoring.
+**Resume Grader** is an AI-powered Flask web application that analyzes resumes and provides actionable feedback to help users craft job-winning resumes. Leveraging natural language processing and a sleek, modern interface, it evaluates resume content, formatting, and role-specific relevance. Deploy it seamlessly on Render and elevate your job application game! 📄✨
 
-## Features
+---
 
-- 📄 Support for PDF, doc, docx and TXT file formats
-- 🎯 Role-specific analysis (Developer, Data Scientist, Designer, General)
-- 📊 Comprehensive scoring system (0-100)
-- 📝 Detailed feedback on resume sections
-- 🛠️ Skills identification and analysis
-- 📱 Responsive design for mobile and desktop
-- 🚀 Real-time analysis with progress indicators
+## 🌟 Features
 
-## Installation
+* 📂 **File Upload**: Accepts PDF, TXT, DOC, and DOCX files (up to 16MB).
+* 🎯 **Role-Based Analysis**: Customized feedback for roles like Software Developer, Data Scientist, UI/UX Designer, or General.
+* 🧠 **AI-Driven Insights**:
 
-### Prerequisites
+  * Extracts contact details (email, phone, LinkedIn).
+  * Identifies resume sections (e.g., Experience, Education, Skills).
+  * Detects skills and estimates years of experience.
+  * Assigns a resume score (0-100) with a dynamic progress bar.
+* 📝 **Detailed Feedback**: Highlights strengths (✓) and weaknesses (✗).
+* 💡 **Improvement Suggestions**: Offers tips to enhance your resume.
+* 📸 **Downloadable Results**: Save analysis as a high-quality PNG image.
+* 🎨 **Modern UI**: Features glassmorphism design, animations, and responsive layouts.
+* ⚡ **Real-Time Analysis**: Instant results powered by Flask and spaCy.
 
-- Python 3.7 or higher
-- pip (Python package installer)
+---
 
-### Setup Steps
+## 🛠️ Technologies Used
 
-1. **Clone or download the project files**
-   ```bash
-   # Create a new directory for the project
-   mkdir ai-resume-grader
-   cd ai-resume-grader
-   ```
+* **Backend**: Python, Flask, spaCy, NLTK, PyPDF2, python-docx
+* **Frontend**: HTML5, CSS3, JavaScript, Font Awesome, html2canvas
+* **Deployment**: Render (Python web service), gunicorn
+* **Dependencies**: Listed in `requirements.txt`
 
-2. **Create a virtual environment (recommended)**
-   ```bash
-   python -m venv venv
-   
-   # Activate virtual environment
-   # On Windows:
-   venv\Scripts\activate
-   # On macOS/Linux:
-   source venv/bin/activate
-   ```
+---
 
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+## 📋 Prerequisites
 
-4. **Download spaCy language model**
-   ```bash
-   python -m spacy download en_core_web_sm
-   ```
+Before running or deploying, ensure you have:
 
-5. **Create necessary directories**
-   ```bash
-   mkdir uploads
-   mkdir templates
-   ```
+* 🐍 Python 3.10.12
+* 🐙 Git
+* ☁️ Render account (for deployment)
+* 📦 Virtual environment (recommended for local setup)
 
-6. **Move the HTML file to templates directory**
-   - Save the provided HTML file as `templates/index.html`
+---
 
-7. **Run the application**
-   ```bash
-   python app.py
-   ```
+## 🏁 Local Setup
 
-8. **Access the application**
-   - Open your browser and go to `http://localhost:5000`
+Follow these steps to run the application locally:
 
-## File Structure
+### Clone the Repository:
+
+```bash
+git clone https://github.com/ShubhamAIML/AI-Resume-Grader.git  
+cd resume-grader
+```
+
+### Create a Virtual Environment:
+
+```bash
+python -m venv venv  
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+### Install Dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+### Download spaCy Model:
+
+```bash
+python -m spacy download en_core_web_sm
+```
+
+### Set Environment Variables:
+
+Create a `.env` file in the root directory:
+
+```bash
+echo "SECRET_KEY=$(python -c 'import secrets; print(secrets.token_hex(16))')" > .env
+```
+
+### Run the Application:
+
+```bash
+python app.py
+```
+
+Visit [http://localhost:5000](http://localhost:5000) in your browser to use the app.
+
+---
+
+## ☁️ Deploying to Render
+
+Deploy your Resume Grader on Render’s free tier with these steps:
+
+### Prepare Your Repository:
+
+Ensure your project structure matches:
 
 ```
-ai-resume-grader/
-├── static/
-│   ├── css/styles.css
-│   └── js/script.js
-├── templates/
-│   └── index.html
-├── uploads/
-│   └── .gitkeep
-├── .gitignore
-├── Procfile
-├── README.md
+resume-grader/
 ├── app.py
 ├── requirements.txt
-└── runtime.txt
+├── gunicorn.conf.py
+├── Procfile
+├── render.yaml
+├── .gitignore
+├── download_spacy_model.sh
+├── templates/
+│   └── index.html
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── script.js
 ```
 
-## Usage
+### Make the spaCy Script Executable:
 
-1. **Upload Resume**: Click "Choose File" or drag and drop your resume (PDF, TXT, DOC, DOCX format)
-2. **Select Role**: Choose the target role from the dropdown menu
-3. **Analyze**: Click "Analyze Resume" to get instant feedback
-4. **Review Results**: View your score, detailed feedback, and improvement suggestions
+```bash
+chmod +x download_spacy_model.sh
+```
 
-## Scoring Criteria
+### Initialize Git and Push to GitHub:
 
-The application evaluates resumes based on:
+```bash
+git init  
+git add .  
+git commit -m "Initial commit for Resume Grader"  
+git remote add origin https://github.com/ShubhamAIML/AI-Resume-Grader.git  
+git push -u origin main
+```
 
-- **Contact Information (20%)**: Email, phone number presence
-- **Section Completeness (25%)**: Required sections like experience, education, skills
-- **Skills Analysis (20%)**: Role-relevant technical and soft skills
-- **Experience Analysis (20%)**: Years of experience identification
-- **Formatting Quality (15%)**: Structure, readability, and presentation
+### Create a Web Service on Render:
 
-## Role-Specific Analysis
+* Log in to Render and select **New > Web Service**.
+* Connect your GitHub repository.
+* If using `render.yaml`, Render auto-configures settings. Otherwise:
 
-### Developer
-- Programming languages (Python, JavaScript, Java, etc.)
-- Frameworks and libraries
-- Development tools and methodologies
-- Cloud platforms and databases
+  * **Runtime**: Python
+  * **Build Command**: `./download_spacy_model.sh`
+  * **Start Command**: `gunicorn app:app`
+  * **Environment Variables**:
 
-### Data Scientist
-- Statistical and ML tools (Python, R, TensorFlow, etc.)
-- Data visualization tools
-- Big data technologies
-- Analytics platforms
+    * `SECRET_KEY`: Generate a secure key (e.g., `python -c "import secrets; print(secrets.token_hex(16))"`) or let Render generate it.
+    * `PYTHON_VERSION`: 3.10.12
 
-### Designer
-- Design software (Photoshop, Figma, Sketch, etc.)
-- UI/UX principles
-- Design methodologies
-- Creative skills
+### Deploy:
 
-### General
-- Soft skills and transferable abilities
-- Leadership and communication
-- Project management
-- General business skills
+* Click **Create Web Service** or push changes to trigger deployment.
+* Check build logs to ensure the spaCy model downloads successfully.
+* Access your app at the Render URL (e.g., `https://resume-grader.onrender.com`).
 
-## Troubleshooting
+---
 
-### Common Issues
+## 📂 Project Structure
 
-1. **spaCy model not found**
-   ```bash
-   python -m spacy download en_core_web_sm
-   ```
+```
+resume-grader/
+├── app.py                  # Flask application logic
+├── requirements.txt        # Python dependencies
+├── gunicorn.conf.py        # Gunicorn configuration for Render
+├── Procfile                # Render start command
+├── render.yaml             # Render deployment blueprint
+├── .gitignore              # Files to ignore in Git
+├── download_spacy_model.sh # Script to install spaCy model
+├── templates/
+│   └── index.html          # Frontend HTML template
+├── static/
+│   ├── css/
+│   │   └── style.css       # CSS styles
+│   └── js/
+│       └── script.js       # JavaScript logic
+```
 
-2. **NLTK data not found**
-   - The app will automatically download required NLTK data on first run
+---
 
-3. **File upload issues**
-   - Ensure file size is under 16MB
-   - Only PDF, TXT, DOC and DOCX files are supported
+## 🎮 How to Use
 
-4. **Port already in use**
-   - Change the port in app.py: `app.run(debug=True, host='0.0.0.0', port=5001)`
+### Upload a Resume:
 
-## Customization
+* Drag and drop or click to upload a PDF, TXT, DOC, or DOCX file (max 16MB).
 
-### Adding New Roles
-Edit the `SKILL_SETS` dictionary in `app.py` to add new roles and their associated skills.
+### Select a Target Role:
 
-### Modifying Scoring Criteria
-Adjust the scoring weights in the `grade_resume()` function in `app.py`.
+* Choose from General, Software Developer, Data Scientist, or UI/UX Designer.
 
-### Styling Changes
-Modify the CSS in the `<style>` section of `templates/index.html`.
+### Analyze:
 
-## Security Notes
+* Click **Analyze Resume** to receive a score, feedback, and suggestions.
 
-- Files are processed in temporary storage and automatically deleted
-- No data is permanently stored on the server
-- Change the `SECRET_KEY` in `app.py` for production use
+### Review Results:
 
-## License
+* View your resume score, contact info, sections, skills, and experience.
+* Check detailed feedback and improvement tips.
 
-This project is open source and available under the MIT License.
+### Download Analysis:
 
-## Contributing
+* Click **Download Analysis** to save results as a PNG image.
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+---
 
-## Support
+## 🐞 Troubleshooting
 
-For issues and questions, please check the troubleshooting section or create an issue in the project repository.
+### Render Build Fails:
+
+* Check logs for spaCy model download errors. Ensure `download_spacy_model.sh` is executable (`chmod +x`).
+* Verify `requirements.txt` dependencies are correct.
+
+### File Upload Errors:
+
+* Confirm files are in supported formats (PDF, TXT, DOC, DOCX) and under 16MB.
+* Check `app.py` for correct `UPLOAD_FOLDER` configuration.
+
+### Analysis Fails:
+
+* Ensure `en_core_web_sm` spaCy model is installed.
+* Review server logs for errors in `app.py`.
+
+### Static Files Not Loading:
+
+* Verify `style.css` and `script.js` are in `static/css/` and `static/js/`.
+* Check `index.html` for correct `url_for` paths.
+
+---
+
+## 🔮 Future Enhancements
+
+* 🌍 Support additional file formats (e.g., RTF).
+* 📊 Add database integration for result storage.
+* 🤖 Upgrade to advanced NLP models for deeper analysis.
+* 🎨 Implement customizable UI themes.
+* 📱 Enhance mobile responsiveness.
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+---
+
+## 🙌 Contributing
+
+We welcome contributions! 🎉
+
+* Fork the repository.
+* Create a feature branch (`git checkout -b feature/YourFeature`).
+* Commit changes (`git commit -m 'Add YourFeature'`).
+* Push to the branch (`git push origin feature/YourFeature`).
+* Open a Pull Request.
+
+---
+
+## 📧 Contact
+
+Questions or feedback? Reach out via:
+
+* **Email**: [24081712@scale.iitrpr.ac.in](24081712@scale.iitrpr.ac.in)
+* **GitHub**: ShubhamAIML
+
+**Happy resume grading! 🚀📄**
+
+---
