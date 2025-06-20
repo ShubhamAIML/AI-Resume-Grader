@@ -1,10 +1,10 @@
 services:
-     - type: web
-       name: resume-grader
-       env: docker
-       plan: free
-       region: oregon
-       dockerfilePath: ./Dockerfile
-       envVars:
-         - key: SECRET_KEY
-           generateValue: true
+  - type: web
+    name: resume-grader
+    env: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
