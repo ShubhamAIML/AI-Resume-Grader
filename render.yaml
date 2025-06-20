@@ -1,10 +1,14 @@
 services:
   - type: web
     name: resume-grader
-    env: docker
+    env: python
     plan: free
     region: oregon
-    dockerfilePath: ./Dockerfile
+    preBuildCommand: "apt-get update && apt-get install -y build-essential libblas-dev liblapack-dev gfortran"
+    buildCommand: "./download_spacy_model.sh"
+    startCommand: "gunicorn app:app"
     envVars:
       - key: SECRET_KEY
         generateValue: true
+      - key: PYTHON_VERSION
+        value: 3.10.12
