@@ -13,23 +13,17 @@ from flask import Flask, request, render_template, jsonify, flash, redirect, url
 from werkzeug.utils import secure_filename
 import docx
 
-# Download required NLTK data
+# Download required NLTK data during initialization
 try:
     nltk.data.find('tokenizers/punkt')
 except LookupError:
     nltk.download('punkt')
-
 try:
     nltk.data.find('corpora/stopwords')
 except LookupError:
     nltk.download('stopwords')
 
-# Load spaCy model
-try:
-    nlp = spacy.load("en_core_web_sm")
-except OSError:
-    nlp = None
-
+# Initialize Flask app
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your-secret-key-here')
 app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER', tempfile.gettempdir())
@@ -37,8 +31,16 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
 # Create uploads directory if it doesn't exist
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-
 ALLOWED_EXTENSIONS = {'pdf', 'txt', 'doc', 'docx'}
+
+# Function to lazy load spaCy model only when needed
+def load_spacy_model():
+    try:
+        # Load spaCy model with disabled pipelines to save memory
+        return spacy.load("en_core_web_sm", disable=['ner', 'parser'])
+    except OSError:
+        print("Warning: Could not load spaCy model")
+        return None
 
 # Predefined skill sets for different roles
 SKILL_SETS = {
@@ -73,6 +75,7 @@ REQUIRED_SECTIONS = [
 ]
 
 def allowed_file(filename):
+    """Check if file extension is allowed"""
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def extract_text_from_pdf(file_path):
@@ -82,8 +85,10 @@ def extract_text_from_pdf(file_path):
             pdf_reader = PyPDF2.PdfReader(file)
             text = ""
             for page in pdf_reader.pages:
-                text += page.extract_text() + "\n"
-        return text
+                extracted = page.extract_text()
+                if extracted:
+                    text += extracted + "\n"
+            return text
     except Exception as e:
         return f"Error reading PDF: {str(e)}"
 
@@ -209,8 +214,13 @@ def analyze_formatting(text):
 
 def grade_resume(text, role='general'):
     """Main function to grade resume and provide feedback"""
+    nlp = load_spacy_model()  # Lazy load spaCy model
     total_score = 0
     feedback = []
+    
+    # If spaCy model failed to load, provide fallback feedback
+    if nlp is None:
+        feedback.append("Warning: NLP analysis skipped due to missing spaCy model")
     
     contact_info = extract_contact_info(text)
     contact_score = 0
@@ -301,10 +311,12 @@ def grade_resume(text, role='general'):
 
 @app.route('/')
 def index():
+    """Render the main page"""
     return render_template('index.html')
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
+    """Handle file upload and resume grading"""
     if 'file' not in request.files:
         return jsonify({'error': 'No file selected'}), 400
     
@@ -356,6 +368,7 @@ def upload_file():
 
 @app.route('/health')
 def health_check():
+    """Health check endpoint"""
     return jsonify({'status': 'healthy', 'timestamp': datetime.now().isoformat()})
 
 if __name__ == '__main__':
